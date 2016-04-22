@@ -1,0 +1,49 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src = "/socket.io/socket.io.js" > </script>
+    <script>
+    var socket = io.connect();
+    socket.on('temperature', handleTemperature);
+    function handleTemperature(message) {
+        var data = JSON.parse(message);
+        var temp = data.temperature;
+        var tempC = (temp) + "&nbsp;" + '\xB0' + "C";
+        $("#temp").html(tempC);
+        }
+        
+        
+    socket.on('pressure', handlePressure);
+        function handlePressure(message) {
+        var data = JSON.parse(message);
+        var press = data.pressure;
+        var pressM = (press);
+        $("#press").html(pressM + "&nbsp;" + "millibar");
+    }
+    
+    socket.on('cpuTemperature', handlecpuTemperature);
+        function handlecpuTemperature(message) {
+        var data = JSON.parse(message);
+        var tempC = data.cpuTemperature;
+        var tempF = (tempC) + "&nbsp;" + '\xB0' + "C";
+        $("#cpu").html(tempF);
+    }
+    
+    </script>
+    </head>
+ 
+<body>
+    <h1><span class="label label-default">B767 node 3 & 4</span></h1>
+    <br><br>
+    <h3><span class="label label-default">Temperature</span></h3>
+    <h3><span id="temp" class="label label-primary">-</span></h3>
+    <h3><span class="label label-default">Atmospheric pressure</span></h3>
+    <h3><span id="press" class="label label-primary">-</span></h3>
+    <br><br><br><br>
+    <h3><span class="label label-default">CPU temperature</span></h3>
+    <h3><span id="cpu" class="label label-primary">-</span></h3>
+</body>
+
+
+</html>
